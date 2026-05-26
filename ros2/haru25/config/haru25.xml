@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root BTCPP_format="4"
+      main_tree_to_execute="main">
+  <BehaviorTree ID="ball">
+    <Sequence>
+      <BallDown/>
+      <Sleep msec="500"/>
+      <CatchBall/>
+      <Sleep msec="500"/>
+      <BallUp/>
+    </Sequence>
+  </BehaviorTree>
+
+  <BehaviorTree ID="eraser">
+    <Sequence>
+      <CatchEraser/>
+      <BallDown/>
+      <Sleep msec="500"/>
+      <SetPlan path_i="1"/>
+      <ReleaseEraser/>
+      <Sleep msec="500"/>
+      <Shot/>
+      <Sleep msec="500"/>
+      <BallUp/>
+      <ReleaseBall/>
+    </Sequence>
+  </BehaviorTree>
+
+  <BehaviorTree ID="init">
+    <Sequence>
+      <InitPos/>
+      <ReleaseEraser/>
+      <CatchBall/>
+      <BallUp/>
+    </Sequence>
+  </BehaviorTree>
+
+  <BehaviorTree ID="main">
+    <Sequence>
+      <SubTree ID="init"
+               _autoremap="false"/>
+      <SubTree ID="path0"/>
+      <SubTree ID="eraser"
+               _autoremap="false"/>
+      <SetPlan path_i="2"/>
+      <SubTree ID="ball"/>
+      <SetPlan path_i="3"/>
+      <BallDown/>
+      <ReleaseBall/>
+    </Sequence>
+  </BehaviorTree>
+
+  <BehaviorTree ID="path0">
+    <Parallel failure_count="1"
+              success_count="1">
+      <SetPlan path_i="0"/>
+      <Sequence>
+        <GetPosY min_y="6.0"/>
+        <Sleep msec="1500"/>
+      </Sequence>
+    </Parallel>
+  </BehaviorTree>
+
+  <BehaviorTree ID="restart">
+    <Sequence>
+      <SubTree ID="init"/>
+      <ParallelAll max_failures="1">
+        <SetPlan path_i="5"/>
+        <Delay delay_msec="1000">
+          <ReleaseBall/>
+        </Delay>
+      </ParallelAll>
+      <SubTree ID="ball"
+               _autoremap="false"/>
+      <SetPlan path_i="3"/>
+      <BallDown/>
+      <ReleaseBall/>
+    </Sequence>
+  </BehaviorTree>
+
+  <!-- Description of Node Models (used by Groot) -->
+  <TreeNodesModel>
+    <Action ID="BallDown"
+            editable="true"/>
+    <Action ID="BallUp"
+            editable="true"/>
+    <Action ID="CatchBall"
+            editable="true"/>
+    <Action ID="CatchEraser"
+            editable="true"/>
+    <Action ID="GetPosY"
+            editable="true">
+      <input_port name="min_y"/>
+    </Action>
+    <Action ID="InitPos"
+            editable="true"/>
+    <Action ID="ReleaseBall"
+            editable="true"/>
+    <Action ID="ReleaseEraser"
+            editable="true"/>
+    <Action ID="SetPlan"
+            editable="true">
+      <input_port name="path_i"/>
+    </Action>
+    <Action ID="Shot"
+            editable="true"/>
+  </TreeNodesModel>
+
+</root>

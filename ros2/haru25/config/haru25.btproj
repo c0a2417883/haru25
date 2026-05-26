@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root BTCPP_format="4" project_name="Project">
+    <include path="haru25.xml"/>
+    <!-- Description of Node Models (used by Groot) -->
+    <TreeNodesModel>
+        <Action ID="BallDown" editable="true"/>
+        <Action ID="BallUp" editable="true"/>
+        <Action ID="CatchBall" editable="true"/>
+        <Action ID="CatchEraser" editable="true"/>
+        <Action ID="GetPosY" editable="true">
+            <input_port name="min_y"/>
+        </Action>
+        <Action ID="InitPos" editable="true"/>
+        <Action ID="ReleaseBall" editable="true"/>
+        <Action ID="ReleaseEraser" editable="true"/>
+        <Action ID="SetPlan" editable="true">
+            <input_port name="path_i"/>
+        </Action>
+        <Action ID="Shot" editable="true"/>
+    </TreeNodesModel>
+</root>

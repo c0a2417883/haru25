@@ -1,0 +1,28 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 1000  # Hz
+
+    wheel_controller:
+      type: velocity_controllers/JointGroupVelocityController
+
+    suspension_controller:
+      type: position_controllers/JointGroupPositionController
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+wheel_controller:
+  ros__parameters:
+    joints:
+      - wheel0_joint
+      - wheel1_joint
+      - wheel2_joint
+      - wheel3_joint
+
+suspension_controller:
+  ros__parameters:
+    joints:
+      - wheel0_sus_joint
+      - wheel1_sus_joint
+      - wheel2_sus_joint
+      - wheel3_sus_joint

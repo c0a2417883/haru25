@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<robot name="haru25"
+    xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <!--roslaunch urdf_tutorial display.launch model:=haru25.xacro-->
+
+    <!--Don't write Japanese-->
+    <xacro:property name="base" value="$(find haru25_gazebo)/urdf"/>
+    <xacro:property name="omni" value="$(find haru25_gazebo)/urdf"/>
+
+    <xacro:include filename="${base}/body.xacro"/>
+    <xacro:include filename="${base}/imu.xacro"/>
+    <xacro:include filename="${base}/laser.xacro"/>
+
+    <xacro:include filename="${omni}/omni100.xacro"/>
+    <xacro:include filename="${omni}/haru25.ros2_control.xacro"/>
+    <xacro:include filename="${omni}/haru25.gazebo.xacro"/>
+
+    <xacro:property name="wheel_base" value="0.198" />
+
+    <link name="base_link"/>
+
+    <xacro:body_macro parent="base_link"/>
+
+    <xacro:imu_macro prefix="imu" parent="base_link" xyz="0 0 0"/>
+    <!--TOF-->
+    <xacro:laser_macro prefix="laser" parent="base_link" xyz="-0.206902 -0.207186 0.02" rpy="0 0 ${radians(45)}"/>
+
+    <xacro:omni100 prefix="wheel0" parent="base_link" xyz="${wheel_base*cos(radians(45))} ${wheel_base*sin(radians(45))} 0.05" rpy="0 0 ${radians(45)}"/>
+    <xacro:omni100 prefix="wheel1" parent="base_link" xyz="${wheel_base*cos(radians(135))} ${wheel_base*sin(radians(135))} 0.05" rpy="0 0 ${radians(135)}"/>
+    <xacro:omni100 prefix="wheel2" parent="base_link" xyz="${wheel_base*cos(radians(-135))} ${wheel_base*sin(radians(-135))} 0.05" rpy="0 0 ${radians(-135)}"/>
+    <xacro:omni100 prefix="wheel3" parent="base_link" xyz="${wheel_base*cos(radians(-45))} ${wheel_base*sin(radians(-45))} 0.05" rpy="0 0 ${radians(-45)}"/>
+
+    <xacro:haru25_system/>
+    <xacro:haru25_gazebo/>
+</robot>

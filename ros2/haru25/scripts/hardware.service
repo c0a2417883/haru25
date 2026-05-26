@@ -1,0 +1,13 @@
+[Unit]
+After=network.target
+Description=ROS2 HARU25 SERVICE
+
+[Service]
+User=avo
+Group=avo
+ExecStart=/bin/bash -c 'source /home/avo/ros2_ws/install/setup.bash;export ROS_DOMAIN_ID=30;export ROS_ALLOWED_HOSTS="localhost.local:robot_1.local";ros2 launch haru25 hardware.launch.py;'
+RemainAfterExit=yes
+KillSignal=SIGINT
+
+[Install]
+WantedBy=default.target

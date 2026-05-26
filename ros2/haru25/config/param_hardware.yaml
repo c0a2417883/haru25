@@ -1,0 +1,27 @@
+# 必ず少数で記述してください、id1~id4は整数で記述してください
+
+haru25_bt:
+  ros__parameters:
+    init_pos_x: 3.112 # ロボットに設定する初期位置
+    init_pos_y: 0.29
+    init_pos_yaw: 0.0
+    max_a: 3.0 # 加速度制限 手動機のみ
+
+navigation:
+  ros__parameters:
+    max_vel_angular: 3.14 # 最大回転速度
+    min_vel_angular: 0.0 # 最小回転速度　ここが0じゃないとフラフラする
+    max_vel_linear: 1.8 # 最大並進速度 0.75 →　2.5に固定　速度を変えるときは経路から作り直す
+    min_vel_linear: 0.1 # 最小並進速度
+    max_vel_linear_pid: 0.5 # ゴール付近の最高速度
+    pid_yaw: [3.0, 0.0, 0.0] # 角度のPIDゲイン
+    pid_foot: [5.0, 0.0, 1.0] # ゴール付近の位置PIDゲイン 
+    pid_path: [5.0, 0.0, 1.0] # 経路追従位置PIDゲイン  
+    path_pid_distance: 0.4 # 位置PIDが始まる範囲
+    path_goal_distance: 0.05 # ゴールの範囲(半径)
+    path_goal_angle: 0.174532925 # ゴールの角度の範囲(ラジアン)
+    wheel_radius: -0.05 # タイヤの半径 (実機は想定と違う向きにモーターが付いているため、マイナスにする)
+    id1: 1
+    id2: 3
+    id3: 2
+    id4: 0

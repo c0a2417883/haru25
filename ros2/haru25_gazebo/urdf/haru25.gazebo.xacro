@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:macro name="haru25_gazebo">
+        <gazebo>
+            <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
+                <parameters>$(find haru25_gazebo)/config/joint_controller.yaml</parameters>
+            </plugin>
+            <plugin name="p3d_base_controller" filename="libgazebo_ros_p3d.so">
+                <ros>
+                    <namespace></namespace>
+                    <remapping>odom:=odom</remapping>
+                </ros>
+                <frame_name>map</frame_name>
+                <body_name>base_link</body_name>
+                <update_rate>200.0</update_rate>
+                <always_on>true</always_on>
+            </plugin>
+        </gazebo>
+    </xacro:macro>
+</robot>

@@ -1,0 +1,161 @@
+<?xml version="1.0"?>
+<sdf version="1.6">
+  <world name="default">
+    <gravity>0 0 -9.8</gravity>
+
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+
+    <include>
+      <uri>model://sun</uri>
+    </include>
+
+    <scene>
+      <shadows>false</shadows>
+    </scene>
+
+    <include>
+      <name>frame0</name>
+      <uri>model://haru25_frame0</uri>
+      <!-- 中心座標 -->
+      <pose>0.0 -0.019 0.0445 0 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <name>frame1</name>
+      <uri>model://haru25_frame0</uri>
+      <pose>0.0 6.943 0.0445 0 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <name>frame2</name>
+      <uri>model://haru25_frame1</uri>
+      <pose>-3.481 3.462 0.0445 0 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <name>frame3</name>
+      <uri>model://haru25_frame1</uri>
+      <pose>3.481 3.462 0.0445 0 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <name>frame4</name>
+      <uri>model://haru25_frame2</uri>
+      <pose>0.607 3.481 0.0445 0 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <name>frame5</name>
+      <uri>model://haru25_frame2</uri>
+      <pose>2.545 3.481 0.0445 0 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <name>frame6</name>
+      <uri>model://haru25_frame3</uri>
+      <pose>2.026 1.481 0.0445 0 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <name>frame7</name>
+      <uri>model://haru25_frame3</uri>
+      <pose>1.126 2.481 0.0445 0 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <name>frame8</name>
+      <uri>model://haru25_frame3</uri>
+      <pose>2.026 3.481 0.0445 0 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <name>frame9</name>
+      <uri>model://haru25_frame3</uri>
+      <pose>1.126 4.481 0.0445 0 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <name>frame10</name>
+      <uri>model://haru25_frame3</uri>
+      <pose>2.026 5.481 0.0445 0 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <name>frame11</name>
+      <uri>model://haru25_frame4</uri>
+      <pose>0.313 2.981 0.0445 0 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <name>frame12</name>
+      <uri>model://haru25_frame5</uri>
+      <pose>0.019 3.462 0.0445 0 0 0 0 0</pose>
+    </include>
+
+<!-- 左のフィールド -->
+
+    <include>
+      <name>frame13</name>
+      <uri>model://haru25_frame2</uri>
+      <pose>-0.607 3.481 0.0445 0 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <name>frame14</name>
+      <uri>model://haru25_frame2</uri>
+      <pose>-2.545 3.481 0.0445 0 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <name>frame15</name>
+      <uri>model://haru25_frame3</uri>
+      <pose>-2.026 1.481 0.0445 0 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <name>frame16</name>
+      <uri>model://haru25_frame3</uri>
+      <pose>-1.126 2.481 0.0445 0 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <name>frame17</name>
+      <uri>model://haru25_frame3</uri>
+      <pose>-2.026 3.481 0.0445 0 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <name>frame18</name>
+      <uri>model://haru25_frame3</uri>
+      <pose>-2.026 3.481 0.0445 0 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <name>frame19</name>
+      <uri>model://haru25_frame3</uri>
+      <pose>-1.126 4.481 0.0445 0 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <name>frame20</name>
+      <uri>model://haru25_frame3</uri>
+      <pose>-2.026 5.481 0.0445 0 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <name>frame21</name>
+      <uri>model://haru25_frame4</uri>
+      <pose>-0.313 2.981 0.0445 0 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <name>frame22</name>
+      <uri>model://haru25_frame5</uri>
+      <pose>-0.019 3.462 0.0445 0 0 0 0 0</pose>
+    </include>
+
+
+  </world>
+</sdf>

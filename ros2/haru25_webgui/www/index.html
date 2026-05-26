@@ -1,0 +1,174 @@
+<!DOCTYPE HTML>
+<html lang="ja">
+
+<head>
+    <title>Harurobo2025</title>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <div class="box1">
+        <label>接続状態：　</label>
+        <label id="connect">不明</label>
+    </div>
+    <div class="box2">
+        <div id="disp"></div>
+        <div id="pos"></div>
+        <div id="img"><img
+            class="picutre"
+            src="img.png"
+            alt="img" /></div>
+    </div>
+    <div class="box3">
+        <div id="scroll"><pre id="log"></pre></div>
+    </div>
+    <style type="text/css">
+        *{
+            background-color: black;
+            color: white;
+            font-size: 20px;
+        }
+        .box2, .box3 {
+            float: left;
+            width: 450px;                /* 横幅を200pxに指定 */
+            border-color: yellow; }          
+        .picutre{
+            height: 160px;
+            padding-top: 10px;
+        }
+        #scroll {
+            width: 450px;                /* 横幅を200pxに指定 */
+            height: 300px;               /* 横幅を200pxに指定 */
+            border: 1px solid #000;      /* わかりやすくボーダーを引く */
+            overflow-y: auto;          /* 縦方向にスクロール可能にする */
+            padding-left: 20px;
+            border-color: red;
+            border-radius: 8px;
+          }
+    </style>
+    <script>
+        let connect = false;
+        let pad = true;
+        let ws = new WebSocket('ws:/'+location.hostname+':25565/');
+        ws.binaryType = 'arraybuffer';
+        ws.onopen = function (event) {
+            connect = true;
+            document.getElementById("connect").innerText = "接続";
+        }
+
+        //エラー発生
+        ws.onerror = function (error) {
+            document.getElementById("connect").innerText = "エラー";
+        };
+
+        //メッセージ受信
+        var text_decoder = new TextDecoder("utf-8");
+        var startTime = new Date();
+        ws.onmessage = function (event) {
+            // ROS2から来るデータの数
+            var len = event.data.byteLength;
+            // 位置情報を含んでいる (float 4byte * 6)
+            if(len>=24){
+                var pos = new Float32Array(event.data, 0, 6);
+                document.getElementById("pos").innerHTML = `x: ${pos[0].toFixed(2)}, y: ${pos[1].toFixed(2)}, yaw: ${pos[2].toFixed(2)}<br>vx: ${pos[3].toFixed(2)}, vy: ${pos[4].toFixed(2)}, vyaw: ${pos[5].toFixed(2)}`;
+                // ログも含んでいる場合
+                if(len>24){
+                    // charの配列の24番目からstringへ変換
+                    var str = text_decoder.decode(event.data.slice(24));
+                    var logs = str.split('\n');
+                    
+                    nowTime = new Date();
+                    if(str.includes("InitPos")){
+                        startTime = nowTime;
+                    }
+                    var delta_time = (nowTime.getTime()-startTime.getTime()) * 0.001;
+                    console.log(logs);
+                    // スクロールボックス内のテキストエリア
+                    for (let i = 0; i < logs.length; i++) {
+                        if(logs[i].length == 0)
+                            continue;
+                        document.getElementById("log").innerHTML += `${delta_time.toFixed(1)} : ${logs[i]}\n`;
+                    }
+                    // 一番下までスクロールする
+                    document.getElementById("scroll").scroll({top: document.getElementById("log").clientHeight});
+                }
+            }
+        };
+
+        ws.onclose = function () {
+            connect = false;
+            document.getElementById("connect").innerText = "サーバーとコントローラーが切断";
+        };
+        //Create AnimationFrame
+        var rAF = window.mozRequestAnimationFrame ||
+            window.webkitRequestAnimationFrame ||
+            window.requestAnimationFrame;
+
+        //Update
+        function update() {
+            var pads = navigator.getGamepads ? navigator.getGamepads() :
+                (navigator.webkitGetGamepads ? navigator.webkitGetGamepads : []);
+
+            //tekitou
+            pads = pads[0];
+            if (pads) {
+                var but = [];
+
+                //buttons
+                let btn = 0;//16bit
+                for (let i = 0; i < 16; i++) {
+                    let val = pads.buttons[i];
+                    let pressed = val == 1.0;
+                    if (typeof (val) == "object") {
+                        pressed = val.pressed;
+                        val = val.value;
+                    }
+                    btn |= pressed << i;
+                    but[i] = val;
+                }
+                let axes = pads.axes;
+                var txt = [];
+                //txt += pads.id + "<br>";
+                for (var i = 0; i < but.length; i++) {
+                    if (but[i] == 1) txt += '<input type="checkbox" checked="checked">';
+                    else txt += '<input type="checkbox" >';
+                }
+                const name = ['LX', 'LY', 'RX', 'RY']
+                for (var i = 0; i < axes.length; i++) {
+                    txt += `<br> ${name[i]}: `;
+                    txt += axes[i].toFixed(2);
+                }
+                document.getElementById("disp").innerHTML = txt;
+                //鯖へ送信
+                let joy = new Int16Array(4)
+                for (var i = 0; i < 4; i++) {
+                    joy[i] = (Math.abs(axes[i]) < 0.1 ? 0 : axes[i]) * 2048;
+                }
+                let data = new Uint8Array(10);
+                data[0] = btn & 0xff;
+                data[1] = (btn >> 8) & 0xff;
+                for (let i = 0; i < 4; ++i) {
+                  data[i * 2 + 2] = joy[i] & 0xff;
+                  data[i * 2 + 3] = (joy[i] >> 8) & 0xff;
+                }
+                if (connect) {
+                  ws.send(data.buffer);
+                }
+
+                if (!pad) {
+                    document.getElementById("connect").innerText = "接続";
+                }
+                pad = true;
+            } else if (pad) {
+                document.getElementById("connect").innerText = "Joyコンが接続されていません";
+                pad = false;
+            }
+        }
+
+        //Start
+        setInterval("update()", 20);
+
+    </script>
+</body>
+
+</html>

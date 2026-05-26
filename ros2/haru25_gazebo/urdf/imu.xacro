@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:macro name="imu_macro" params="parent prefix xyz">
+    <joint name="imu_joint" type="fixed">
+      <parent link="${parent}"/>
+      <child link="${prefix}_link"/>
+      <origin xyz="${xyz}" rpy="0 0 0"/>
+    </joint>
+    <link name="${prefix}_link"/>
+    <gazebo reference="${prefix}_link">
+      <sensor name="gazebo_imu" type="imu">
+        <gravity>true</gravity>
+        <visualize>true</visualize>
+        <update_rate>100</update_rate>
+        <always_on>true</always_on>
+        <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+          <ros>
+            <!--namespace>/robot</namespace-->
+            <remapping>~/out:=imu</remapping>
+          </ros>
+          <initial_orientation_as_reference>false</initial_orientation_as_reference>
+          <output_type>sensor_msgs/Imu</output_type>
+          <frame_name>imu_link</frame_name>
+        </plugin>
+        <imu>
+          <angular_velocity>
+            <x>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>2e-04</stddev>
+                <bias_mean>0.0000075</bias_mean>
+                <bias_stddev>0.0000008</bias_stddev>
+              </noise>
+            </x>
+            <y>
+              <nosie type="gaussian">
+                <mean>0.0</mean>
+                <stddev>2e-04</stddev>
+                <bias_mean>0.0000075</bias_mean>
+                <bias_stddev>0.0000008</bias_stddev>
+              </nosie>
+            </y>
+            <z>
+              <nosie type="gaussian">
+                <mean>0.0</mean>
+                <stddev>2e-04</stddev>
+                <bias_mean>0.0000075</bias_mean>
+                <bias_stddev>0.0000008</bias_stddev>
+              </nosie>
+            </z>
+          </angular_velocity>
+          <linear_acceleration>
+            <x>
+              <nosie type="gaussian">
+                <mean>0.0</mean>
+                <stddev>1.7e-02</stddev>
+                <bias_mean>0.001</bias_mean>
+                <bias_stddev>0.001</bias_stddev>
+              </nosie>
+            </x>
+            <y>
+              <nosie type="gaussian">
+                <mean>0.0</mean>
+                <stddev>1.7e-02</stddev>
+                <bias_mean>0.001</bias_mean>
+                <bias_stddev>0.001</bias_stddev>
+              </nosie>
+            </y>
+            <z>
+              <nosie type="gaussian">
+                <mean>0.0</mean>
+                <stddev>1.7e-02</stddev>
+                <bias_mean>0.001</bias_mean>
+                <bias_stddev>0.001</bias_stddev>
+              </nosie>
+            </z>
+          </linear_acceleration>
+        </imu>
+      </sensor>
+    </gazebo>
+  </xacro:macro>
+</robot>

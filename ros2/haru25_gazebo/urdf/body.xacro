@@ -1,0 +1,34 @@
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <xacro:macro name="body_macro" params="parent">
+
+        <joint name="${parent}" type="fixed">
+            <parent link="base_link"/>
+            <child link="func_link"/>
+            <origin xyz="0 0 0.05" rpy="0 0 0"/>
+        </joint>
+        <link name="func_link">
+            <inertial>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <mass value="15"/>
+                <inertia ixx="0.425" ixy="0.0" ixz="0.0" iyy="0.425" iyz="0.0" izz="0.625"/>
+            </inertial>
+            <visual>
+                <geometry>
+                    <box size="0.4 0.4 0.05" />
+                </geometry>
+            </visual>
+            <collision>
+                <geometry>
+                    <box size="0.0 0.0 0.0" />
+                </geometry>
+            </collision>
+        </link>
+
+        <gazebo reference="func_link">
+            <material>Gazebo/OrangeTransparentOverlay</material>
+        </gazebo>
+
+    </xacro:macro>
+
+</robot>

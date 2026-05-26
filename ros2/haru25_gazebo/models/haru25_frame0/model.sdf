@@ -1,0 +1,32 @@
+<?xml version='1.0'?>
+<sdf version="1.6">
+    <model name="frame">
+        <static>true</static>
+        <pose>0 0 0 0 0 0</pose>
+        <link name="link">
+            <collision name="collision">
+            <!-- collisionは当たり判定 -->
+                <geometry>
+                    <box>
+                    <!-- ｘの辺の長さ、ｙの辺の長さ、ｚの辺の長さ（ｍ） -->
+                        <size>6.924 0.038 0.089</size>
+                    </box>
+                </geometry>
+            </collision>
+            <visual name="visual">
+            <!-- visualは見た目 -->
+                <geometry>
+                    <box>
+                        <size>6.924 0.038 0.089</size>
+                    </box>
+                </geometry>
+                <material>
+                    <script>
+                        <uri>file://media/materials/scripts/gazebo.material</uri>
+                        <name>Gazebo/Wood</name>
+                    </script>
+                </material>
+            </visual>
+        </link>
+    </model>
+</sdf>

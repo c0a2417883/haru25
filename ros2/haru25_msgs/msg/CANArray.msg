@@ -1,0 +1,1 @@
+haru25_msgs/CAN[] array
